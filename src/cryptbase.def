@@ -1,0 +1,13 @@
+EXPORTS
+SystemFunction001="c:\\windows\\system32\\cryptbase.SystemFunction001" @1
+SystemFunction002="c:\\windows\\system32\\cryptbase.SystemFunction002" @2
+SystemFunction003="c:\\windows\\system32\\cryptbase.SystemFunction003" @3
+SystemFunction004="c:\\windows\\system32\\cryptbase.SystemFunction004" @4
+SystemFunction005="c:\\windows\\system32\\cryptbase.SystemFunction005" @5
+SystemFunction028="c:\\windows\\system32\\cryptbase.SystemFunction028" @6
+SystemFunction029="c:\\windows\\system32\\cryptbase.SystemFunction029" @7
+SystemFunction034="c:\\windows\\system32\\cryptbase.SystemFunction034" @8
+#SystemFunction036="c:\\windows\\system32\\cryptbase.SystemFunction036" @9
+SystemFunction040="c:\\windows\\system32\\cryptbase.SystemFunction040" @10
+SystemFunction041="c:\\windows\\system32\\cryptbase.SystemFunction041" @11
+SystemFunction036=SystemFunction036_Proxy
