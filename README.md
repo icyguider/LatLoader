@@ -1,7 +1,7 @@
 # LatLoader
 LatLoader is a PoC module to demonstrate automated lateral movement with the Havoc C2 framework. The main purpose of this project is to help others learn BOF and Havoc module development. This project can also help others understand basic EDR rule evasions, particularly when performing lateral movement.
 
-The `sideload` subcommand is the full-featured PoC of this module. It will attempt to perform lateral movement via DLL sideloading while evading default Elastic EDR rules. For a full list of every rule evaded by this module and how it was done, please see the below section titled [Elastic EDR Rule Evasions](https://github.com/icyguider/wmiexeccpp#elastic-edr-rule-evasions).
+The `sideload` subcommand is the full-featured PoC of this module. It will attempt to perform lateral movement via DLL sideloading while evading default Elastic EDR rules. For a full list of every rule evaded by this module and how it was done, please see the below section titled [Elastic EDR Rule Evasions](https://github.com/icyguider/LatLoader#elastic-edr-rule-evasions).
 
 Video demo w/ Elastic EDR: https://youtu.be/W0PZZPpsO6U
 
