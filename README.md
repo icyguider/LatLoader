@@ -5,9 +5,11 @@ The `sideload` subcommand is the full-featured PoC of this module. It will attem
 
 Video demo w/ Elastic EDR: https://youtu.be/W0PZZPpsO6U
 
+**UPDATE: 10 days after the release of this tool, Elastic updated some of its rules to address the bypasses demonstrated by this project. Please see the [Oct 17th commit](https://github.com/elastic/protections-artifacts/commit/7310e500a6178b6d9f5c189f9ac8de155037836f) in their [protections-artifacts](https://github.com/elastic/protections-artifacts) repo to view the changes made to applicable rules (Like [this one](https://github.com/elastic/protections-artifacts/commit/7310e500a6178b6d9f5c189f9ac8de155037836f#diff-a546f8d6214e32d67e92e76125daa6cb3a4d516616c79f12ccdadffd9c3c2b5b) for example).** 
+
 ## Dependencies/Basic Usage
 
-This module was designed to work on Linux systems with `mingw-w64` installed. Additionally, you must have [osslsigncode](https://github.com/mtrojnar/osslsigncode) installed to provide cert signing for the DLL utilized by the `sideload` subcommand. Once all dependencies are installed, simply type `make` and then load the module into Havoc using the script manager. To view help in Havoc, run `help LatLoader`. To view help for subcommands, run `help [subcommand]`.
+This module was designed to work on Linux systems with `mingw-w64` installed. Additionally, you must have [osslsigncode](https://github.com/mtrojnar/osslsigncode) installed to provide cert signing for the DLL utilized by the `sideload` subcommand. Once all dependencies are installed, simply type `make` and then load the module into Havoc using the script manager. To view help in Havoc, run `help LatLoader`. To view help for subcommands, run `help LatLoader [subcommand]`.
 
 ![help](https://github.com/icyguider/LatLoader/assets/79864975/340d7cf5-2307-48ef-9e7c-fcd8f7cb103b)
 

